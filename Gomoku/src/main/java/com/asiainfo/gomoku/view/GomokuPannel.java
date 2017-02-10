@@ -9,11 +9,14 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.asiainfo.gomoku.R;
+import com.asiainfo.gomoku.utils.GomokuCheckUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 作者:小木箱 邮箱:yangzy3@asiainfo.com 创建时间:2017年02月10日16点59分 描述:五子棋盘自定义view
@@ -26,8 +29,12 @@ public class GomokuPannel extends View {
     private float ratioPieceOfLineHight = 3 * 1.0f / 4;
 
     //B白棋先手,当前轮到白棋了
-
     private boolean mIsWhite = true;
+    //当前游戏已经结束了
+    private boolean mIsGameOver = true;
+    //判断当前游戏获胜赢家
+    private boolean mIsWhiteWinner = true;
+
     private Bitmap mWhitePiece;
     private Bitmap mBlackPiece;
 
@@ -113,7 +120,57 @@ public class GomokuPannel extends View {
         drawBoard(canvas);
 
         drawPieces(canvas);
+
+        checkGameOver(canvas);
     }
+
+    /**
+     * 描述: 创建时间:2/10/17/21:51 作者:小木箱 邮箱:yangzy3@asiainfo.com
+     */
+
+    private void checkGameOver(Canvas canvas) {
+
+        boolean whiteWin = CheckFiveInLine(mWhiteArray);
+        boolean blackWin = CheckFiveInLine(mBlackArray);
+
+        if (whiteWin || blackWin) {
+
+            mIsGameOver = true;
+            mIsWhiteWinner = whiteWin;
+
+            String text = mIsWhiteWinner ? "白棋胜利" : "黑棋胜利";
+
+            Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    private boolean CheckFiveInLine(List<Point> Points) {
+
+        for (Point point : Points) {
+
+            int x = point.x;
+            int y = point.y;
+
+            boolean win = GomokuCheckUtil.checkHorizonal(x, y, Points);
+
+            if (win) return true;
+            win = GomokuCheckUtil.checkVertical(x, y, Points);
+            if (win) return true;
+            win = GomokuCheckUtil.checkLeftDiagonal(x, y, Points);
+            if (win) return true;
+            win = GomokuCheckUtil.checkRightDiagonal(x, y, Points);
+            if (win) return true;
+
+        }
+
+        return false;
+    }
+
+
+
+
 
     /***
      * 绘制棋子
