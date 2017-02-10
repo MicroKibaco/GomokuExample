@@ -37,20 +37,6 @@ public class GomokuPannel extends View {
 
     }
 
-    private void initView() {
-
-        mWhitePiece = BitmapFactory.decodeResource(getResources(), R.drawable.stone_w2);
-        mBlackPiece = BitmapFactory.decodeResource(getResources(), R.drawable.stone_b1);
-        mWhiteArray = new ArrayList<>();
-        mBlackArray = new ArrayList<>();
-        setBackgroundColor(0x00ff0000);
-        mPaint.setColor(0x99ff0000);
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setStyle(Paint.Style.STROKE);
-
-    }
-
     public GomokuPannel(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
         initView();
@@ -58,6 +44,21 @@ public class GomokuPannel extends View {
 
     public GomokuPannel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    private void initView() {
+
+        mWhitePiece = BitmapFactory.decodeResource(getResources(), R.drawable.stone_w2);
+        mBlackPiece = BitmapFactory.decodeResource(getResources(), R.drawable.stone_b1);
+        mWhiteArray = new ArrayList<>();
+        mBlackArray = new ArrayList<>();
+
+        setBackgroundColor(0x00ff0000);
+        mPaint.setColor(0x99ff0000);
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setStyle(Paint.Style.STROKE);
+
     }
 
     @Override
