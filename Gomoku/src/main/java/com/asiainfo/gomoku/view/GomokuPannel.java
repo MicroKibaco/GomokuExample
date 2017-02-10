@@ -25,6 +25,9 @@ public class GomokuPannel extends View {
     private int MAX_LINE = 10;
     private float ratioPieceOfLineHight = 3 * 1.0f / 4;
 
+    //B白棋先手,当前轮到白棋了
+
+    private boolean mIsWhite = true;
     private Bitmap mWhitePiece;
     private Bitmap mBlackPiece;
 
@@ -50,14 +53,15 @@ public class GomokuPannel extends View {
 
         mWhitePiece = BitmapFactory.decodeResource(getResources(), R.drawable.stone_w2);
         mBlackPiece = BitmapFactory.decodeResource(getResources(), R.drawable.stone_b1);
+
         mWhiteArray = new ArrayList<>();
         mBlackArray = new ArrayList<>();
 
-        setBackgroundColor(0x00ff0000);
         mPaint.setColor(0x99ff0000);
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setStyle(Paint.Style.STROKE);
+        setBackgroundColor(0x00ff0000);
 
     }
 
@@ -107,6 +111,36 @@ public class GomokuPannel extends View {
         super.onDraw(canvas);
 
         drawBoard(canvas);
+
+        drawPieces(canvas);
+    }
+
+    /***
+     * 绘制棋子
+     */
+    private void drawPieces(Canvas canvas) {
+
+        for (int i = 0, n = mWhiteArray.size(); i < n; i++) {
+
+            Point whitePoint = mWhiteArray.get(i);
+
+            float left = (whitePoint.x + (1 - ratioPieceOfLineHight) / 2) * mLineHeight;
+            float top = (whitePoint.y + (1 - ratioPieceOfLineHight) / 2) * mLineHeight;
+            canvas.drawBitmap(mWhitePiece, left, top, null);
+
+
+        }
+        for (int i = 0, n = mBlackArray.size(); i < n; i++) {
+
+            Point blackPoint = mBlackArray.get(i);
+
+            float left = (blackPoint.x + (1 - ratioPieceOfLineHight) / 2) * mLineHeight;
+            float top = (blackPoint.y + (1 - ratioPieceOfLineHight) / 2) * mLineHeight;
+            canvas.drawBitmap(mBlackPiece, left, top, null);
+
+        }
+
+
     }
 
     /**
@@ -141,19 +175,45 @@ public class GomokuPannel extends View {
 
         switch (action) {
 
-            case MotionEvent.ACTION_DOWN:
-
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                break;
-
             case MotionEvent.ACTION_UP:
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+
+                Point point = getValidPoint(x, y);
+
+                if (mWhiteArray.contains(point) || mBlackArray.contains(point)) {
+
+                    return false;
+
+                }
+
+                if (mIsWhite) {
+
+                    mWhiteArray.add(point);
+
+                } else {
+
+                    mBlackArray.add(point);
+
+                }
+
+                invalidate();
+
+                mIsWhite = !mIsWhite;
+
+                break;
+
+            default:
                 break;
         }
 
 
         return true;
 
+    }
+
+    private Point getValidPoint(int x, int y) {
+
+        return new Point((int) (x / mLineHeight), (int) (y / mLineHeight));
     }
 }
