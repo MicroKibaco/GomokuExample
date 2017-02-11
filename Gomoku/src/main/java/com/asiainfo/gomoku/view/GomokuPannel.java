@@ -153,15 +153,13 @@ public class GomokuPannel extends View {
             int x = point.x;
             int y = point.y;
 
-            boolean win = GomokuCheckUtil.checkHorizonal(x, y, Points);
-
-            if (win) return true;
-            win = GomokuCheckUtil.checkVertical(x, y, Points);
-            if (win) return true;
-            win = GomokuCheckUtil.checkLeftDiagonal(x, y, Points);
-            if (win) return true;
-            win = GomokuCheckUtil.checkRightDiagonal(x, y, Points);
-            if (win) return true;
+            boolean checkHorizontal = GomokuCheckUtil.checkHorizonal(x, y, Points);
+            boolean checkVertical = GomokuCheckUtil.checkVertical(x, y, Points);
+            boolean checkLeftDiagonal = GomokuCheckUtil.checkLeftDiagonal(x, y, Points);
+            boolean checkRightDiagonal = GomokuCheckUtil.checkRightDiagonal(x, y, Points);
+            if (checkHorizontal || checkVertical || checkLeftDiagonal || checkRightDiagonal) {
+                return true;
+            }
 
         }
 
