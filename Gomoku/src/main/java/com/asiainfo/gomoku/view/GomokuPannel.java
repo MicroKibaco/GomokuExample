@@ -312,6 +312,16 @@ public class GomokuPannel extends View {
         super.onRestoreInstanceState(state);
     }
 
+    public void reStart() {
+
+        mWhiteArray.clear();
+        mBlackArray.clear();
+        mIsGameOver = false;
+        mIsWhiteWinner = false;
+        invalidate();
+
+    }
+
     public interface onGameOverStatusListener {
         void onGameOver();
     }
