@@ -8,6 +8,7 @@
         tools:context="com.asiainfo.gomoku.activity.GomokuActivity">
 
    <com.asiainfo.gomoku.view.GomokuPannel
+           android:id="@+id/my_gomoku"
            android:layout_centerInParent="true"
            android:layout_width="match_parent"
            android:layout_height="match_parent"/>

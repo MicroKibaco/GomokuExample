@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,11 +25,14 @@ import java.util.List;
  */
 public class GomokuPannel extends View {
 
+    private static final String INSTANCE = "instance";
+    private static final String INSTANCE_GAME_OVER = "instance_game_over";
+    private static final String INSTANCE_BLACK_ARRARY = "instance_black_arrary";
+    private static final String INSTANCE_WRITE_ARRARY = "instance_write_arrary";
     private int mPanelWidth;
     private float mLineHeight;
     private int MAX_LINE = 10;
     private float ratioPieceOfLineHight = 3 * 1.0f / 4;
-
     //B白棋先手,当前轮到白棋了
     private boolean mIsWhite = true;
     //当前游戏已经结束了
@@ -39,8 +44,9 @@ public class GomokuPannel extends View {
     private Bitmap mBlackPiece;
 
     private Paint mPaint = new Paint();
-    private List<Point> mWhiteArray;
-    private List<Point> mBlackArray;
+    private ArrayList<Point> mWhiteArray;
+    private ArrayList<Point> mBlackArray;
+    private onGameOverStatusListener mListener;//监听游戏的状态
 
     public GomokuPannel(Context context) {
         this(context, null);
@@ -54,6 +60,10 @@ public class GomokuPannel extends View {
 
     public GomokuPannel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void setOnGameOverStatusListener(onGameOverStatusListener listener) {
+        this.mListener = listener;
     }
 
     private void initView() {
@@ -166,10 +176,6 @@ public class GomokuPannel extends View {
         return false;
     }
 
-
-
-
-
     /***
      * 绘制棋子
      */
@@ -270,5 +276,43 @@ public class GomokuPannel extends View {
     private Point getValidPoint(int x, int y) {
 
         return new Point((int) (x / mLineHeight), (int) (y / mLineHeight));
+    }
+
+    /**
+     * 描述:存储棋子的位置 View的存储与恢复 创建时间:2/11/17/10:46 作者:小木箱 邮箱:yangzy3@asiainfo.com
+     */
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(INSTANCE, super.onSaveInstanceState());
+        bundle.putBoolean(INSTANCE_GAME_OVER, mIsGameOver);
+        bundle.putParcelableArrayList(INSTANCE_WRITE_ARRARY, mWhiteArray);
+        bundle.putParcelableArrayList(INSTANCE_BLACK_ARRARY, mBlackArray);
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+
+        if (state instanceof Bundle) {
+
+            Bundle bundle = (Bundle) state;
+            mIsGameOver = bundle.getBoolean(INSTANCE_GAME_OVER);
+            mWhiteArray = bundle.getParcelableArrayList(INSTANCE_WRITE_ARRARY);
+            mBlackArray = bundle.getParcelableArrayList(INSTANCE_BLACK_ARRARY);
+            Parcelable bundleParcelable = bundle.getParcelable(INSTANCE);
+
+            super.onRestoreInstanceState(bundleParcelable);
+
+            return;
+        }
+
+        super.onRestoreInstanceState(state);
+    }
+
+    public interface onGameOverStatusListener {
+        void onGameOver();
     }
 }
