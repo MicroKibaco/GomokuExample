@@ -78,7 +78,7 @@ public class GomokuPannel extends View {
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        setBackgroundColor(0x00ff0000);
+        //setBackgroundColor(0x00ff0000);
 
     }
 
