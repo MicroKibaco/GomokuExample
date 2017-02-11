@@ -18,9 +18,9 @@ public class GomokuCheckUtil {
         int count = 1;
 
         //上
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
-            if (points.contains(new Point(x, y - i))) {
+            if (points.contains(new Point(x, y + i))) {
 
                 count++;
 
@@ -34,9 +34,9 @@ public class GomokuCheckUtil {
         if (count == MAX_COUNT_IN_LINE)
             return true;
         //下
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
-            if (points.contains(new Point(x, y + i))) {
+            if (points.contains(new Point(x, y - i))) {
 
                 count++;
 
@@ -61,7 +61,7 @@ public class GomokuCheckUtil {
         int count = 1;
 
         //横向左
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
             if (points.contains(new Point(x - i, y))) {
 
@@ -77,9 +77,9 @@ public class GomokuCheckUtil {
         if (count == MAX_COUNT_IN_LINE)
             return true;
         //横向右
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
-            if (points.contains(new Point(x + i, y))) {
+            if (points.contains(new Point(x, y - i))) {
 
                 count++;
 
@@ -104,7 +104,7 @@ public class GomokuCheckUtil {
         int count = 1;
 
         //横向左
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
             if (points.contains(new Point(x - i, y + i))) {
 
@@ -120,7 +120,7 @@ public class GomokuCheckUtil {
         if (count == MAX_COUNT_IN_LINE)
             return true;
         //横向右
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
             if (points.contains(new Point(x + i, y - i))) {
 
@@ -147,7 +147,7 @@ public class GomokuCheckUtil {
         int count = 1;
 
         //横向左
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
             if (points.contains(new Point(x - i, y - i))) {
 
@@ -163,7 +163,7 @@ public class GomokuCheckUtil {
         if (count == MAX_COUNT_IN_LINE)
             return true;
         //横向右
-        for (int i = 0; i < MAX_COUNT_IN_LINE; i++) {
+        for (int i = 1; i < MAX_COUNT_IN_LINE; i++) {
 
             if (points.contains(new Point(x + i, y + i))) {
 
