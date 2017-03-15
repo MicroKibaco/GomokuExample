@@ -10,7 +10,6 @@ import com.asiainfo.gomoku.view.GomokuPannel;
 
 public class GomokuActivity extends Activity {
 
-
     private GomokuPannel mGomokuPannel;
 
     @Override
