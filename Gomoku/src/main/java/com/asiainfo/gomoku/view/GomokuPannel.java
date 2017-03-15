@@ -29,10 +29,12 @@ public class GomokuPannel extends View {
     private static final String INSTANCE_GAME_OVER = "instance_game_over";
     private static final String INSTANCE_BLACK_ARRARY = "instance_black_arrary";
     private static final String INSTANCE_WRITE_ARRARY = "instance_write_arrary";
+
     private int mPanelWidth;
     private float mLineHeight;
     private int MAX_LINE = 10;
     private float ratioPieceOfLineHight = 3 * 1.0f / 4;
+
     //B白棋先手,当前轮到白棋了
     private boolean mIsWhite = true;
     //当前游戏已经结束了
@@ -78,7 +80,6 @@ public class GomokuPannel extends View {
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        //setBackgroundColor(0x00ff0000);
 
     }
 
@@ -290,6 +291,7 @@ public class GomokuPannel extends View {
         bundle.putBoolean(INSTANCE_GAME_OVER, mIsGameOver);
         bundle.putParcelableArrayList(INSTANCE_WRITE_ARRARY, mWhiteArray);
         bundle.putParcelableArrayList(INSTANCE_BLACK_ARRARY, mBlackArray);
+
         return bundle;
     }
 
